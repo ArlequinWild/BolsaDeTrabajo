@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 20-feb-2018 14:31:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.Vacante" table="vacante" schema="public" optimistic-lock="version">
+        <id name="idVacante" type="int">
+            <column name="id_vacante" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="empresa" class="modelo.Empresa" fetch="select">
+            <column name="nombre_emp" length="30" />
+        </many-to-one>
+        <property name="horario" type="string">
+            <column name="horario" length="15" />
+        </property>
+        <property name="lugar" type="string">
+            <column name="lugar" length="20" not-null="true" />
+        </property>
+        <property name="salario" type="double">
+            <column name="salario" scale="0" not-null="true" />
+        </property>
+        <property name="puesto" type="string">
+            <column name="puesto" length="60" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="400" />
+        </property>
+        <set name="profesionistas" table="postular" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="id_vacante" not-null="true" />
+            </key>
+            <many-to-many entity-name="modelo.Profesionista">
+                <column name="correo" length="40" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

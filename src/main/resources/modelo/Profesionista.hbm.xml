@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 20-feb-2018 14:31:45 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.Profesionista" table="profesionista" schema="public" optimistic-lock="version">
+        <id name="correo" type="string">
+            <column name="correo" length="40" />
+            <generator class="assigned" />
+        </id>
+        <property name="carrera" type="string">
+            <column name="carrera" length="30" />
+        </property>
+        <property name="nacionalidad" type="string">
+            <column name="nacionalidad" length="20" not-null="true" />
+        </property>
+        <property name="contrasena" type="string">
+            <column name="contrasena" length="15" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="15" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="60" />
+        </property>
+        <set name="vacantes" table="postular" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="correo" length="40" not-null="true" />
+            </key>
+            <many-to-many entity-name="modelo.Vacante">
+                <column name="id_vacante" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="experienciaLaborals" table="experiencia_laboral" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="correo" length="40" />
+            </key>
+            <one-to-many class="modelo.ExperienciaLaboral" />
+        </set>
+        <set name="skillses" table="skills" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="correo" length="40" not-null="true" />
+            </key>
+            <one-to-many class="modelo.Skills" />
+        </set>
+        <set name="formacionAcademicas" table="formacion_academica" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="correo" length="40" />
+            </key>
+            <one-to-many class="modelo.FormacionAcademica" />
+        </set>
+    </class>
+</hibernate-mapping>
